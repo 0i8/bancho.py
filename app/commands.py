@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import copy
-import importlib
 import math
 import os
 import pprint
@@ -344,7 +343,7 @@ async def recent(ctx: Context) -> Optional[str]:
     l = [f"[{s.mode!r}] {s.bmap.embed}", f"{s.acc:.2f}%"]
 
     if s.mods:
-        l.insert(1, f"+{s.mods!r}")
+        l.insert(1, f"+{Mods.filter_invalid_combos(s.mods, s.mode)!r}")
 
     l = [" ".join(l)]
 
@@ -538,7 +537,7 @@ async def _with(ctx: Context) -> Optional[str]:
 
     # include mods regardless of mode
     if (mods := command_args.get("mods")) is not None:
-        msg_fields.append(f"{mods!r}")
+        msg_fields.append(f"{Mods.filter_invalid_combos(mods, mode_vn)!r}")
 
     score_args: ScoreDifficultyParams = {}
 
